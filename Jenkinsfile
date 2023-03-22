@@ -12,14 +12,13 @@ pipeline {
         }
         stage('Test') {
                     steps {
-                        sh './jenkins/scripts/test.sh'
+	                echo 'Hello World !! This is second step'
+
                     }
                 }
                 stage('Deliver') {
                             steps {
-                                sh './jenkins/scripts/deliver.sh'
-                                input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                                sh './jenkins/scripts/kill.sh'
+		                echo 'Hello World !! This is third step'
                             }
                         }
 
