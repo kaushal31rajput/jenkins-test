@@ -1,0 +1,14 @@
+<testsuites name="Mocha Tests">
+  <testsuite name="Addition" tests="2" errors="0" failures="0" skipped="0" timestamp="2019-05-22T12:40:27" time="0.006">
+    <testcase classname="Addition" name="2 + 2 should be 4" time="0">
+    </testcase>
+    <testcase classname="Addition" name="1 + 5 should be 6" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="Type Comparison" tests="2" errors="0" failures="0" skipped="0" timestamp="2019-05-22T12:40:27" time="0.001">
+    <testcase classname="Type Comparison" name="&apos;5&apos; == 5 should be true" time="0">
+    </testcase>
+    <testcase classname="Type Comparison" name="&apos;5&apos; === 5 should be false" time="0">
+    </testcase>
+  </testsuite>
+</testsuites>
