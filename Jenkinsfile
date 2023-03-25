@@ -24,6 +24,7 @@ export JUNIT_REPORT_PATH=./test-results.xml
 # run mocha and tell it to use the JUnit reporter
 npx mocha --reporter mocha-jenkins-reporter'''
         sh 'ls -lart'
+	sh 'pwd'
       }
     }
   }
