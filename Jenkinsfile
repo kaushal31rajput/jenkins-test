@@ -13,7 +13,7 @@ pipeline {
     }
     stage('Install dependencies') {
       steps {
-        sh 'npm install -d'
+        sh 'npm ci'
       }
     }
     stage('Run test cases') {
