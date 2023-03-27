@@ -61,7 +61,7 @@ def cache(path, key, bucketName, checksum) {
         //dir("${env.WORKSPACE}")
 	sh "pwd"
 	sh "ls -larth"
-        sh "tar -czf ${key}.tar.gz npm_modules"
+        sh "tar -czf ${key}.tar.gz node_modules"
         sh "gsutil cp ${key}.tar.gz ${bucketName}"
         sh "rm ${key}.tar.gz"
         sh "echo ${checksum} > npm-ci-cache-checksum"
