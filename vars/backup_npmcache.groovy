@@ -2,22 +2,9 @@ def call(Map config) {
     println "Workspace directory from sharedlib: ${env.WORKSPACE}"
     sh 'ls -larth'
     def nodeModulesDir = "${env.WORKSPACE}/node_modules"
-
-    def packageJson
-    try {
-        packageJson = readFile "${env.WORKSPACE}/package.json"
-        println "Content of PackageJson: ${packageJson}"
-    } catch (Exception e) {
-        error "Failed to read package.json: ${e.message}"
-    }
-
-    def packageLockJson
-    try {
-        packageLockJson = readFile("${env.WORKSPACE}/package-lock.json")
-    } catch (Exception e) {
-        error "Failed to read package-lock.json: ${e.message}"
-    }
-
+    def packageJson = readFile "${env.WORKSPACE}/package.json"
+    println "Content of PackageJson: ${packageJson}"
+    def packageLockJson = readFile("${env.WORKSPACE}/package-lock.json")
     def checksum = "${packageJson}${packageLockJson}".hashCode()
     println "Content of checksum: ${checksum}"
     def cacheKey = "npm-ci-cache-${checksum}"
