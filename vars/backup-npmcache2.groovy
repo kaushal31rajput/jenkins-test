@@ -2,15 +2,28 @@ def call(Map config) {
     println "Workspace directory from sharedlib: ${env.WORKSPACE}"
     sh 'ls -larth'
     def nodeModulesDir = "${env.WORKSPACE}/node_modules"
-    def packageJson = readFile("${env.WORKSPACE}/package.json")
-    println "Content of PackageJson: ${packageJson}"
-    def packageLockJson = readFile("${env.WORKSPACE}/package-lock.json")
-    def checksum = getChecksum(packageJson, packageLockJson)
+
+    def packageJson
+    try {
+        packageJson = readFile "${env.WORKSPACE}/package.json"
+        println "Content of PackageJson: ${packageJson}"
+    } catch (Exception e) {
+        error "Failed to read package.json: ${e.message}"
+    }
+
+    def packageLockJson
+    try {
+        packageLockJson = readFile("${env.WORKSPACE}/package-lock.json")
+    } catch (Exception e) {
+        error "Failed to read package-lock.json: ${e.message}"
+    }
+
+    def checksum = "${packageJson}${packageLockJson}".hashCode()
     println "Content of checksum: ${checksum}"
     def cacheKey = "npm-ci-cache-${checksum}"
     def bucketName = config.bucketName
 
-    if (isCacheValid(cacheKey, bucketName, packageJson, packageLockJson)) {
+    if (isCacheValid(cacheKey, bucketName)) {
         echo "Restoring node_modules from cache"
         restoreFromCache(cacheKey, bucketName)
     } else {
@@ -21,8 +34,8 @@ def call(Map config) {
     }
 }
 
-def isCacheValid(cacheKey, bucketName, packageJson, packageLockJson) {
-    def checksum = getChecksum(packageJson, packageLockJson)
+def isCacheValid(cacheKey, bucketName) {
+    def checksum = getChecksum()
     container('gcloud') {
         try {
             sh "gsutil cp ${bucketName}/${cacheKey}.tar.gz ."
@@ -69,7 +82,7 @@ def cache(path, key, bucketName, checksum) {
     }
 }
 
-def getChecksum(packageJson, packageLockJson) {
+def getChecksum() {
     return "${packageJson}${packageLockJson}".hashCode()
 }
 
