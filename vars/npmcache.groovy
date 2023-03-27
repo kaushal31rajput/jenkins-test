@@ -30,7 +30,6 @@ def isCacheValid(cacheKey, bucketName, packageJson, packageLockJson) {
         cacheChecksum = readFile('npm-ci-cache-checksum').trim()
         echo "cache checksum ${cacheChecksum}"
         echo "Both checksum are equal ${cacheChecksum} ${checksum}"
-        //System.out.println(cacheChecksum.equals(checksum));
         if (cacheChecksum == checksum) {
             println "Cache hit! Skipping npm-ci."
             return true
@@ -50,9 +49,8 @@ def restoreFromCache(cacheKey, bucketName, nodeModulesDir) {
     try {
         sh "gsutil stat ${bucketName}/${cacheKey}.tar.gz"
         sh "gsutil cp ${bucketName}/${cacheKey}.tar.gz ."
-        sh "gzip -d ${cacheKey}.tar.gz"
-        sh "tar xf ${cacheKey}.tar"
-        sh "rm ${cacheKey}.tar"
+        sh "tar -zxvf ${cacheKey}.tar.gz"
+        sh "rm ${cacheKey}.tar.gz"
     } catch (Exception e) {
         echo "Cache not found in GCS bucket, installing dependencies"
         npmCi()
