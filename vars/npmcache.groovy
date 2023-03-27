@@ -27,9 +27,9 @@ def isCacheValid(cacheKey, bucketName, packageJson, packageLockJson) {
         dir("${env.WORKSPACE}")
         sh "gsutil stat ${bucketName}/npm-ci-cache-checksum"
         sh "gsutil cp ${bucketName}/npm-ci-cache-checksum ."
-        #sh "gzip -d ${cacheKey}.tar.gz"
-        #sh "tar xf ${cacheKey}.tar"
-        #sh "rm ${cacheKey}.tar"
+        //sh "gzip -d ${cacheKey}.tar.gz"
+        //sh "tar xf ${cacheKey}.tar"
+        //sh "rm ${cacheKey}.tar"
         def cacheChecksum = readFile("npm-ci-cache-checksum")
         return cacheChecksum == checksum
     } catch (Exception e) {
