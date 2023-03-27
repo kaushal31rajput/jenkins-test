@@ -23,21 +23,26 @@ def call(Map config) {
 
 def isCacheValid(cacheKey, bucketName, packageJson, packageLockJson) {
     def checksum = getChecksum(packageJson, packageLockJson)
-        println "Content of checksum: ${checksum}"
+    println "Content of checksum: ${checksum}"
     try {
         sh "gsutil stat ${bucketName}/npm-ci-cache-checksum"
         sh "gsutil cp ${bucketName}/npm-ci-cache-checksum ."
         cacheChecksum = readFile('npm-ci-cache-checksum')
-	  echo "cache checksum ${cacheChecksum}"
-	  echo "Both checksum are equal ${cacheChecksum} ${checksum}"
-	  if (cacheChecksum == checksum) {
+        echo "cache checksum ${cacheChecksum}"
+        echo "Both checksum are equal ${cacheChecksum} ${checksum}"
+        if (cacheChecksum == checksum) {
             println "Cache hit! Skipping npm-ci."
-	    return true
+            return true
         } else {
             println "Cache miss! Running npm-ci."
-     } 
+            return false
+        } 
+    } catch (Exception e) {
+        println "Error checking cache validity: ${e}"
+        return false
     }
 }
+
 
 def restoreFromCache(cacheKey, bucketName, nodeModulesDir) {
     try {
