@@ -1,4 +1,5 @@
 def call(Map config) {
+    println "Workspace directory from sharedlib: ${env.WORKSPACE}"
     def nodeModulesDir = "${env.WORKSPACE}/node_modules"
     def packageJson = readFile("${env.WORKSPACE}/package.json")
     def packageLockJson = readFile("${env.WORKSPACE}/package-lock.json")

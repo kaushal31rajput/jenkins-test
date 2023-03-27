@@ -15,6 +15,7 @@ pipeline {
     }
     stage('Install dependencies') {
       steps {
+         println "Workspace directory: ${env.WORKSPACE}"
          npmcache(bucketName: "gs://my-new-bucket-12344321-kaushal") 
       }
     }
