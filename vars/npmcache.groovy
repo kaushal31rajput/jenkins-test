@@ -24,7 +24,7 @@ def call(Map config) {
 def isCacheValid(cacheKey, bucketName, packageJson, packageLockJson) {
     def checksum = getChecksum(packageJson, packageLockJson)
     try {
-        dir("${env.WORKSPACE}")
+        //dir("${env.WORKSPACE}")
         sh "gsutil stat ${bucketName}/npm-ci-cache-checksum"
         sh "gsutil cp ${bucketName}/npm-ci-cache-checksum ."
         //sh "gzip -d ${cacheKey}.tar.gz"
@@ -32,6 +32,7 @@ def isCacheValid(cacheKey, bucketName, packageJson, packageLockJson) {
         //sh "rm ${cacheKey}.tar"
         def cacheChecksum = readFile("npm-ci-cache-checksum")
         return cacheChecksum == checksum
+	echo "Both checksum are equal ${cacheChecksum} ${checksum}"
     } catch (Exception e) {
         return false
     }
