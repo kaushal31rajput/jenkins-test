@@ -30,13 +30,15 @@ def isCacheValid(cacheKey, bucketName, packageJson, packageLockJson) {
         cacheChecksum = readFile('npm-ci-cache-checksum')
         echo "cache checksum ${cacheChecksum}"
         echo "Both checksum are equal ${cacheChecksum} ${checksum}"
-        if (cacheChecksum == checksum) {
-            println "Cache hit! Skipping npm-ci."
-            return true
-        } else {
-            println "Cache miss! Running npm-ci."
-            return false
-        } 
+        System.out.println(x.equals(z));
+        //if (cacheChecksum == checksum) {
+            //println "Cache hit! Skipping npm-ci."
+            //return true
+        //} 
+          //else {
+            //println "Cache miss! Running npm-ci."
+            //return false
+        //} 
     } catch (Exception e) {
         println "Error checking cache validity: ${e}"
         return false
