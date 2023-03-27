@@ -1,4 +1,6 @@
 @Library('first-shared-lib') _
+import org.jenkinsci.plugins.docker.workflow.*
+
 
 pipeline {
   agent any
