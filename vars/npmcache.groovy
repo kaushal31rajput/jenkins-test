@@ -2,7 +2,7 @@ def call(Map config) {
     println "Workspace directory from sharedlib: ${env.WORKSPACE}"
     sh 'ls -larth'
     def nodeModulesDir = "${env.WORKSPACE}/node_modules"
-    def packageJson = readFile("${env.WORKSPACE}/package.json")
+    def packageJson = readFile "${env.WORKSPACE}/package.json"
     def packageLockJson = readFile("${env.WORKSPACE}/package-lock.json")
     echo $packageJson
     def checksum = "${packageJson}${packageLockJson}".hashCode()
