@@ -1,3 +1,5 @@
+@Library('first-shared-lib')
+
 pipeline {
   agent any
   stages {
@@ -13,7 +15,7 @@ pipeline {
     }
     stage('Install dependencies') {
       steps {
-        sh 'npm ci'
+       npmcache(bucketName: "gs://my-new-bucket-12344321-kaushal") 
       }
     }
     stage('Run test cases') {
