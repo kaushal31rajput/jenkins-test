@@ -15,7 +15,7 @@ pipeline {
     }
     stage('Install dependencies') {
       steps {
-       npmcache(bucketName: "gs://my-new-bucket-12344321-kaushal") 
+         npmcache(bucketName: "gs://my-new-bucket-12344321-kaushal") 
       }
     }
     stage('Run test cases') {
