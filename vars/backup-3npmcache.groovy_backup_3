@@ -23,26 +23,30 @@ def call(Map config) {
 
 def isCacheValid(cacheKey, bucketName, packageJson, packageLockJson) {
     def checksum = getChecksum(packageJson, packageLockJson)
-    try {
-        sh "gsutil cp ${bucketName}/${cacheKey}.tar.gz ."
-        sh "gzip -d ${cacheKey}.tar.gz"
-        sh "tar xf ${cacheKey}.tar"
-        sh "rm ${cacheKey}.tar"
-        def cacheChecksum = readFile("${nodeModulesDir}/npm-ci-cache-checksum")
-        return cacheChecksum == checksum
-    } catch (Exception e) {
-        return false
+    container('gcloud') {
+        try {
+            sh "gsutil cp ${bucketName}/${cacheKey}.tar.gz ."
+            sh "gzip -d ${cacheKey}.tar.gz"
+            sh "tar xf ${cacheKey}.tar"
+            sh "rm ${cacheKey}.tar"
+            def cacheChecksum = readFile("${nodeModulesDir}/npm-ci-cache-checksum")
+            return cacheChecksum == checksum
+        } catch (Exception e) {
+            return false
+        }
     }
 }
 
 def restoreFromCache(cacheKey, bucketName) {
-    try {
-        sh "gsutil cp ${bucketName}/${cacheKey}.tar.gz ."
-        sh "gzip -d ${cacheKey}.tar.gz"
-        sh "tar xf ${cacheKey}.tar"
-        sh "rm ${cacheKey}.tar"
-    } catch (Exception e) {
-        error "Failed to restore node_modules from cache"
+    container('gcloud') {
+        try {
+            sh "gsutil cp ${bucketName}/${cacheKey}.tar.gz ."
+            sh "gzip -d ${cacheKey}.tar.gz"
+            sh "tar xf ${cacheKey}.tar"
+            sh "rm ${cacheKey}.tar"
+        } catch (Exception e) {
+            error "Failed to restore node_modules from cache"
+        }
     }
 }
 
@@ -53,13 +57,15 @@ def npmCi() {
 }
 
 def cache(path, key, bucketName, checksum) {
-    try {
-        sh "tar -czf ${key}.tar.gz ${path}"
-        sh "gsutil cp ${key}.tar.gz ${bucketName}"
-        sh "rm ${key}.tar.gz"
-        sh "echo ${checksum} > ${nodeModulesDir}/npm-ci-cache-checksum"
-    } catch (Exception e) {
-        error "Failed to cache ${path}"
+    container('gcloud') {
+        try {
+            sh "tar -czf ${key}.tar.gz ${path}"
+            sh "gsutil cp ${key}.tar.gz ${bucketName}"
+            sh "rm ${key}.tar.gz"
+            sh "echo ${checksum} > ${nodeModulesDir}/npm-ci-cache-checksum"
+        } catch (Exception e) {
+            error "Failed to cache ${path}"
+        }
     }
 }
 
