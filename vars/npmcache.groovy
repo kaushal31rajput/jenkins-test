@@ -34,7 +34,7 @@ def isCacheValid(cacheKey, bucketName, packageJson, packageLockJson) {
         cacheChecksum = readFile('npm-ci-cache-checksum')
 	echo "cache checksum ${cacheChecksum}"
 	echo "Both checksum are equal ${cacheChecksum} ${checksum}"
-        return cacheChecksum == checksum
+        return ${cacheChecksum} == ${checksum}
     } catch (Exception e) {
         return false
     }
