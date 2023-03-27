@@ -25,22 +25,17 @@ def isCacheValid(cacheKey, bucketName, packageJson, packageLockJson) {
     def checksum = getChecksum(packageJson, packageLockJson)
         println "Content of checksum: ${checksum}"
     try {
-        //dir("${env.WORKSPACE}")
         sh "gsutil stat ${bucketName}/npm-ci-cache-checksum"
         sh "gsutil cp ${bucketName}/npm-ci-cache-checksum ."
-        //sh "gzip -d ${cacheKey}.tar.gz"
-        //sh "tar xf ${cacheKey}.tar"
-        //sh "rm ${cacheKey}.tar"
         cacheChecksum = readFile('npm-ci-cache-checksum')
-	echo "cache checksum ${cacheChecksum}"
-	echo "Both checksum are equal ${cacheChecksum} ${checksum}"
-	if (cacheChecksum == checksum) {
+	  echo "cache checksum ${cacheChecksum}"
+	  echo "Both checksum are equal ${cacheChecksum} ${checksum}"
+	  if (cacheChecksum == checksum) {
             println "Cache hit! Skipping npm-ci."
 	    return true
         } else {
             println "Cache miss! Running npm-ci."
      } 
-     //return cacheChecksum == checksum
     }
 }
 
