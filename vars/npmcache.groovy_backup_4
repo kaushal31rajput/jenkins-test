@@ -12,7 +12,7 @@ def call(Map config) {
 
     if (isCacheValid(cacheKey, bucketName, packageJson, packageLockJson)) {
         echo "Restoring node_modules from cache"
-        restoreFromCache(cacheKey, bucketName, nodeModulesDir)
+        restoreFromCache(cacheKey, bucketName)
     } else {
         echo "Installing npm dependencies"
         npmCi()
@@ -24,7 +24,6 @@ def call(Map config) {
 def isCacheValid(cacheKey, bucketName, packageJson, packageLockJson) {
     def checksum = getChecksum(packageJson, packageLockJson)
     try {
-        sh "gsutil stat ${bucketName}/${cacheKey}.tar.gz"
         sh "gsutil cp ${bucketName}/${cacheKey}.tar.gz ."
         sh "gzip -d ${cacheKey}.tar.gz"
         sh "tar xf ${cacheKey}.tar"
@@ -36,16 +35,14 @@ def isCacheValid(cacheKey, bucketName, packageJson, packageLockJson) {
     }
 }
 
-def restoreFromCache(cacheKey, bucketName, nodeModulesDir) {
+def restoreFromCache(cacheKey, bucketName) {
     try {
-        sh "gsutil stat ${bucketName}/${cacheKey}.tar.gz"
         sh "gsutil cp ${bucketName}/${cacheKey}.tar.gz ."
         sh "gzip -d ${cacheKey}.tar.gz"
         sh "tar xf ${cacheKey}.tar"
         sh "rm ${cacheKey}.tar"
     } catch (Exception e) {
-        echo "Cache not found in GCS bucket, installing dependencies"
-        npmCi()
+        error "Failed to restore node_modules from cache"
     }
 }
 
