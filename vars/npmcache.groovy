@@ -58,7 +58,7 @@ def npmCi() {
 
 def cache(path, key, bucketName, checksum) {
     try {
-        dir("${env.WORKSPACE}") 
+        //dir("${env.WORKSPACE}") 
         sh "tar -czf ${key}.tar.gz npm_modules"
         sh "gsutil cp ${key}.tar.gz ${bucketName}"
         sh "rm ${key}.tar.gz"
