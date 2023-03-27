@@ -6,6 +6,7 @@ def call(Map config) {
     println "Content of PackageJson: ${packageJson}"
     def packageLockJson = readFile("${env.WORKSPACE}/package-lock.json")
     def checksum = "${packageJson}${packageLockJson}".hashCode()
+    println "Content of checksum: ${checksum}"
     def cacheKey = "npm-ci-cache-${checksum}"
     def bucketName = config.bucketName
 
