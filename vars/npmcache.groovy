@@ -27,7 +27,7 @@ def isCacheValid(cacheKey, bucketName, packageJson, packageLockJson) {
     try {
         sh "gsutil stat ${bucketName}/npm-ci-cache-checksum"
         sh "gsutil cp ${bucketName}/npm-ci-cache-checksum ."
-        cacheChecksum = readFile('npm-ci-cache-checksum')
+        cacheChecksum = readFile('npm-ci-cache-checksum').trim()
         echo "cache checksum ${cacheChecksum}"
         echo "Both checksum are equal ${cacheChecksum} ${checksum}"
         System.out.println(cacheChecksum.equals(checksum));
