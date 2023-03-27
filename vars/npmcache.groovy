@@ -3,6 +3,7 @@ def call(Map config) {
     sh 'ls -larth'
     def nodeModulesDir = "${env.WORKSPACE}/node_modules"
     def packageJson = readFile "${env.WORKSPACE}/package.json"
+    println "Content of PackageJson: ${packageJson}"
     def packageLockJson = readFile("${env.WORKSPACE}/package-lock.json")
     def checksum = "${packageJson}${packageLockJson}".hashCode()
     def cacheKey = "npm-ci-cache-${checksum}"
