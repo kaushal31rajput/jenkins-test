@@ -31,10 +31,10 @@ def isCacheValid(cacheKey, bucketName, packageJson, packageLockJson) {
         //sh "gzip -d ${cacheKey}.tar.gz"
         //sh "tar xf ${cacheKey}.tar"
         //sh "rm ${cacheKey}.tar"
-        def cacheChecksum = readFile npm-ci-cache-checksum
+        cacheChecksum = readFile npm-ci-cache-checksum
 	echo "cache checksum ${cacheChecksum}"
-        return cacheChecksum == checksum
 	echo "Both checksum are equal ${cacheChecksum} ${checksum}"
+        return cacheChecksum == checksum
     } catch (Exception e) {
         return false
     }
