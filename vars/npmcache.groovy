@@ -15,7 +15,7 @@ def call(Map config) {
         restoreFromCache(cacheKey, bucketName, nodeModulesDir)
     } else {
         echo "Installing npm dependencies"
-        npmCi()
+        sh "npm ci"
         echo "Caching node_modules"
         cache(nodeModulesDir, cacheKey, bucketName, checksum)
     }
