@@ -39,9 +39,8 @@ def isCacheValid(cacheKey, bucketName, packageJson, packageLockJson) {
 	    return true
         } else {
             println "Cache miss! Running npm-ci."
-        //return cacheChecksum == checksum
-    } catch (Exception e) {
-        return false
+     } 
+     //return cacheChecksum == checksum
     }
 }
 
