@@ -81,8 +81,10 @@ def cache(path, key, bucketName, checksum) {
 }
 
 def getChecksum(packageJson, packageLockJson) {
-    return "${packageJson}${packageLockJson}".hashCode()
+    def checksum = "${packageJson}${packageLockJson}".hashCode()
+    return checksum.toString().trim()
 }
+
 
 def fileExists(path) {
     return new File(path).exists()
