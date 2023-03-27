@@ -24,12 +24,13 @@ def call(Map config) {
 def isCacheValid(cacheKey, bucketName, packageJson, packageLockJson) {
     def checksum = getChecksum(packageJson, packageLockJson)
     try {
-        sh "gsutil stat ${bucketName}/${cacheKey}.tar.gz"
-        sh "gsutil cp ${bucketName}/${cacheKey}.tar.gz ."
-        sh "gzip -d ${cacheKey}.tar.gz"
-        sh "tar xf ${cacheKey}.tar"
-        sh "rm ${cacheKey}.tar"
-        def cacheChecksum = readFile("${nodeModulesDir}/npm-ci-cache-checksum")
+        dir("${env.WORKSPACE}")
+        sh "gsutil stat ${bucketName}/npm-ci-cache-checksum"
+        sh "gsutil cp ${bucketName}/npm-ci-cache-checksum ."
+        #sh "gzip -d ${cacheKey}.tar.gz"
+        #sh "tar xf ${cacheKey}.tar"
+        #sh "rm ${cacheKey}.tar"
+        def cacheChecksum = readFile("npm-ci-cache-checksum")
         return cacheChecksum == checksum
     } catch (Exception e) {
         return false
@@ -57,10 +58,12 @@ def npmCi() {
 
 def cache(path, key, bucketName, checksum) {
     try {
-        sh "tar -czf ${key}.tar.gz ${path}"
+        dir("${env.WORKSPACE}") 
+        sh "tar -czf ${key}.tar.gz npm_modules"
         sh "gsutil cp ${key}.tar.gz ${bucketName}"
         sh "rm ${key}.tar.gz"
-        sh "echo ${checksum} > ${nodeModulesDir}/npm-ci-cache-checksum"
+        sh "echo ${checksum} > npm-ci-cache-checksum"
+	sh "gsutil cp npm-ci-cache-checksum ${bucketName}"
     } catch (Exception e) {
         error "Failed to cache ${path}"
     }
