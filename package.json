@@ -1,11 +1,24 @@
 {
-  "name": "my-app",
+  "name": "jenkins-ci-cd",
   "version": "1.0.0",
-  "description": "My example app",
+  "description": "",
   "main": "index.js",
-  "dependencies": {
-    "express": "^4.17.1",
-    "body-parser": "^1.19.0"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/auth0-blog/jenkins-ci-cd.git"
+  },
+  "keywords": [],
+  "author": "Bruno Krebs <krebs.bruno@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/auth0-blog/jenkins-ci-cd/issues"
+  },
+  "homepage": "https://github.com/auth0-blog/jenkins-ci-cd#readme",
+  "devDependencies": {
+    "mocha": "^6.1.4",
+    "mocha-jenkins-reporter": "^0.4.1"
   }
 }
-
