@@ -7,7 +7,7 @@ def call(Map config) {
     String packageLockJson = readFile("${env.WORKSPACE}/package-lock.json")
     String checksum = getChecksum(packageJson, packageLockJson)
     String cacheKey = "npm-ci-cache-${checksum}"
-    String bucketName = "my-new-bucket-12344321-kaushal"
+    String bucketName = "gs://my-new-bucket-12344321-kaushal"
 
     if (isCacheValid(cacheKey, bucketName, packageJson, packageLockJson)) {
         echo "Restoring node_modules from cache"
