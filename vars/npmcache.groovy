@@ -44,10 +44,11 @@ def isCacheValid(cacheKey, bucketName, packageJson, packageLockJson) {
 
 def restoreFromCache(cacheKey, bucketName, nodeModulesDir) {
     try {
-        sh "gsutil stat ${bucketName}/${cacheKey}.tar.gz"
-        sh "gsutil cp ${bucketName}/${cacheKey}.tar.gz ."
-        sh "tar -zxvf ${cacheKey}.tar.gz"
-        sh "rm ${cacheKey}.tar.gz"
+        cacheDownload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "npm-ci-cache"]
+        //sh "gsutil stat ${bucketName}/${cacheKey}.tar.gz"
+        //sh "gsutil cp ${bucketName}/${cacheKey}.tar.gz ."
+        //sh "tar -zxvf ${cacheKey}.tar.gz"
+        //sh "rm ${cacheKey}.tar.gz"
     } catch (Exception e) {
         echo "Cache not found in GCS bucket, installing dependencies"
         sh "npm ci"
@@ -59,6 +60,8 @@ def cache(path, key, bucketName, checksum) {
         sh "pwd"
         sh "ls -larth"
         //sh "tar -czf ${key}.tar.gz node_modules"
+	 sh "echo ${checksum} > npm-ci-cache-checksum"
+         sh "gsutil cp npm-ci-cache-checksum ${bucketName}"
          cacheUpload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "npm-ci-cache"])
 	//cacheUpload([WORKSPACE_CACHE_DIR: ".jest/cache", CACHE_KEY: "JEST_CACHE_KEY_NAME"])
 	//CacheUpload(config: [CACHE_KEY: key, WORKSPACE_CACHE_DIR: '.', JENKINS_GCS_BUCKET: bucketName]).call()
