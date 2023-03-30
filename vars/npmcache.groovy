@@ -10,7 +10,7 @@ def call(Map config) {
     String cacheKey = "npm-ci-cache-${checksum}"
     String bucketName = "gs://my-new-bucket-12344321-kaushal"
 
-    if (isCacheValid(cacheKey, bucketName, checksum)) {
+    if (isCacheValid(bucketName, checksum)) {
         echo "Restoring node_modules from cache"
         restoreFromCache(cacheKey, bucketName, nodeModulesDir)
     } else {
@@ -21,7 +21,7 @@ def call(Map config) {
     }
 }
 
-def isCacheValid(cacheKey, bucketName, checksum) {
+def isCacheValid(bucketName, checksum) {
    //def checksum = getChecksum(packageJson, packageLockJson)
    //def checksum = ChecksumUtils.getChecksum("${env.WORKSPACE}/package.json", "${env.WORKSPACE}/package-lock.json")
     try {
@@ -44,7 +44,7 @@ def isCacheValid(cacheKey, bucketName, checksum) {
   }
 
 
-def restoreFromCache(cacheKey, bucketName, nodeModulesDir) {
+def restoreFromCache(bucketName) {
     try {
          cacheDownload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "npm-ci-cache"])
         //sh "gsutil stat ${bucketName}/${cacheKey}.tar.gz"
@@ -57,7 +57,7 @@ def restoreFromCache(cacheKey, bucketName, nodeModulesDir) {
     }
  }
 
-def cache(path, key, bucketName, checksum) {
+def cache(key, bucketName, checksum) {
     try {
         sh "pwd"
         sh "ls -larth"
