@@ -1,11 +1,12 @@
 #!/usr/bin/env groovy
 
+import com.hcl.icontrol.jenkins.ChecksumUtils
 
 def call(Map config) {
     String nodeModulesDir = "${env.WORKSPACE}/node_modules"
-    String packageJson = readFile("${env.WORKSPACE}/package.json")
-    String packageLockJson = readFile("${env.WORKSPACE}/package-lock.json")
-    String checksum = getChecksum(packageJson, packageLockJson)
+    //String packageJson = readFile("${env.WORKSPACE}/package.json")
+    //String packageLockJson = readFile("${env.WORKSPACE}/package-lock.json")
+    String checksum = ChecksumUtils.getChecksum(package.json, package-lock.json)
     String cacheKey = "npm-ci-cache-${checksum}"
     String bucketName = "gs://my-new-bucket-12344321-kaushal"
 
