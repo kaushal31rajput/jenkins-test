@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-import com.hcl.icontrol.jenkins.CheckSum
+import com.hcl.icontrol.jenkins.ChecksumUtils
 
 def call(Map config) {
     String nodeModulesDir = "${env.WORKSPACE}/node_modules"
