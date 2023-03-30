@@ -1,6 +1,5 @@
 #!/usr/bin/env groovy
 
-import com.hcl.icontrol.jenkins.cache.CacheUpload
 
 def call(Map config) {
     String nodeModulesDir = "${env.WORKSPACE}/node_modules"
