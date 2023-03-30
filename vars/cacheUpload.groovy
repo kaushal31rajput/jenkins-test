@@ -17,7 +17,6 @@ def call(Map config = [:]) {
         workspaceCacheDir = workspaceCacheDir.replaceFirst("/", "")
     }
     log('DEBUG', "Cache upload cacheKey=${cacheKey}, cacheFile=${cacheFile}, workspaceCacheDir=${workspaceCacheDir}")
-    container('gcloud') {
         dir("${env.WORKSPACE}") {
             try {
                 sh script: """
@@ -28,7 +27,6 @@ def call(Map config = [:]) {
             } catch (Exception e) {
                 log("WARN", "Cannot upload maven repository: " + e.message)
             }
-        }
     }
 }
 return this
