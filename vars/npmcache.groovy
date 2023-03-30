@@ -21,9 +21,9 @@ def call(Map config) {
     }
 }
 
-def isCacheValid(cacheKey, bucketName) {
+def isCacheValid(cacheKey, bucketName, checksum) {
    //def checksum = getChecksum(packageJson, packageLockJson)
-     def checksum = ChecksumUtils.getChecksum("${env.WORKSPACE}/package.json", "${env.WORKSPACE}/package-lock.json")
+   //def checksum = ChecksumUtils.getChecksum("${env.WORKSPACE}/package.json", "${env.WORKSPACE}/package-lock.json")
     try {
         sh "gsutil stat ${bucketName}/npm-ci-cache-checksum"
         sh "gsutil cp ${bucketName}/npm-ci-cache-checksum ."
