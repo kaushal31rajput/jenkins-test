@@ -18,7 +18,6 @@ def call(Map config = [:]) {
     }
 
     log('DEBUG', "Download cache cacheKey=${cacheKey}, cache file=${cacheFile}, directory=${workspaceCacheDir},")
-    container('gcloud') {
         def fileExist = sh(script: "gcloud storage ls -L ${bucketName}/${cacheFile}", returnStatus: true) as Integer
         if (fileExist == 0) {
             dir("${env.WORKSPACE}") {
@@ -30,7 +29,6 @@ def call(Map config = [:]) {
                 """
             }
         }
-    }
 }
 
 return this
