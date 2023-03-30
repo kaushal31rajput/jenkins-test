@@ -59,7 +59,7 @@ def cache(path, key, bucketName, checksum) {
         sh "pwd"
         sh "ls -larth"
         //sh "tar -czf ${key}.tar.gz node_modules"
-	cacheUpload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "npm-ci-cache"])
+         cacheUpload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "npm-ci-cache"])
 	//cacheUpload([WORKSPACE_CACHE_DIR: ".jest/cache", CACHE_KEY: "JEST_CACHE_KEY_NAME"])
 	//CacheUpload(config: [CACHE_KEY: key, WORKSPACE_CACHE_DIR: '.', JENKINS_GCS_BUCKET: bucketName]).call()
 
