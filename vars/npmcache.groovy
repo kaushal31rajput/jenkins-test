@@ -44,7 +44,7 @@ def isCacheValid(cacheKey, bucketName, packageJson, packageLockJson) {
 
 def restoreFromCache(cacheKey, bucketName, nodeModulesDir) {
     try {
-        cacheDownload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "npm-ci-cache"]
+         cacheDownload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "npm-ci-cache"])
         //sh "gsutil stat ${bucketName}/${cacheKey}.tar.gz"
         //sh "gsutil cp ${bucketName}/${cacheKey}.tar.gz ."
         //sh "tar -zxvf ${cacheKey}.tar.gz"
