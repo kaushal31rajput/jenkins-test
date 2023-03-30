@@ -59,7 +59,7 @@ def cache(path, key, bucketName, checksum) {
         sh "pwd"
         sh "ls -larth"
         sh "tar -czf ${key}.tar.gz node_modules"
-        CacheUpload(config: [CACHE_KEY: key, WORKSPACE_CACHE_DIR: '.', JENKINS_GCS_BUCKET: bucketName]).call()
+        cacheUpload(config: [CACHE_KEY: key, WORKSPACE_CACHE_DIR: '.', JENKINS_GCS_BUCKET: bucketName]).call()
     } catch (Exception e) {
         error "Failed to cache ${path}"
     }
