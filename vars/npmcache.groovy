@@ -10,7 +10,7 @@ def call(Map config) {
     String cacheKey = "npm-ci-cache-${checksum}"
     String bucketName = "gs://my-new-bucket-12344321-kaushal"
 
-    if (isCacheValid(cacheKey, bucketName)) {
+    if (isCacheValid(cacheKey, bucketName, checksum)) {
         echo "Restoring node_modules from cache"
         restoreFromCache(cacheKey, bucketName, nodeModulesDir)
     } else {
