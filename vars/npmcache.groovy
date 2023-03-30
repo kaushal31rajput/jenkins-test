@@ -12,12 +12,12 @@ def call(Map config) {
 
     if (isCacheValid(bucketName, checksum)) {
         echo "Restoring node_modules from cache"
-        restoreFromCache(cacheKey, bucketName, nodeModulesDir)
+        restoreFromCache(bucketName)
     } else {
         echo "Installing npm dependencies"
         sh "npm ci"
         echo "Caching node_modules"
-        cache(nodeModulesDir, cacheKey, bucketName, checksum)
+        cache(cacheKey, bucketName, checksum)
     }
 }
 
