@@ -1,6 +1,5 @@
 #!/usr/bin/env groovy
 
-import com.hcl.icontrol.jenkins.cache.CacheUpload
 
 def call(Map config) {
     String nodeModulesDir = "${env.WORKSPACE}/node_modules"
@@ -55,12 +54,16 @@ def restoreFromCache(cacheKey, bucketName, nodeModulesDir) {
     }
  }
 
+
 def cache(path, key, bucketName, checksum) {
     try {
-        sh "pwd"
-        sh "ls -larth"
+	sh "pwd"
+	sh "ls -larth"
         sh "tar -czf ${key}.tar.gz node_modules"
-        CacheUpload(config: [CACHE_KEY: key, WORKSPACE_CACHE_DIR: '.', JENKINS_GCS_BUCKET: bucketName]).call()
+        sh "gsutil cp ${key}.tar.gz ${bucketName}"
+        sh "rm ${key}.tar.gz"
+        sh "echo ${checksum} > npm-ci-cache-checksum"
+	  sh "gsutil cp npm-ci-cache-checksum ${bucketName}"
     } catch (Exception e) {
         error "Failed to cache ${path}"
     }
