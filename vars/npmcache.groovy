@@ -4,7 +4,7 @@ import com.hcl.icontrol.jenkins.ChecksumUtils
 
 def call(Map config) {
     String nodeModulesDir = "${env.WORKSPACE}/node_modules"
-    String checksum = ChecksumUtils.getChecksum("${env.WORKSPACE}/package.json", "${env.WORKSPACE}/package-lock.json")
+    String checksum = ChecksumUtils.getChecksum("package.json", "package-lock.json")
     String cacheKey = "npm-ci-cache-${checksum}"
     String bucketName = "gs://${env.JENKINS_GCS_BUCKET}"
     sh "ls -larth"
