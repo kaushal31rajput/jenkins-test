@@ -6,8 +6,9 @@ def call(Map config) {
     sh "ls -larth"
     sh "pwd"
     echo "value for workspace is ${env.WORKSPACE}"
+    sh "cat package.json"
     String nodeModulesDir = "${env.WORKSPACE}/node_modules"
-    String checksum = ChecksumUtils.getChecksum(".package.json", ".package-lock.json")
+    String checksum = ChecksumUtils.getChecksum("package.json", "package-lock.json")
     String cacheKey = "npm-ci-cache-${checksum}"
     String bucketName = "gs://${env.JENKINS_GCS_BUCKET}"
     sh "ls -larth"
