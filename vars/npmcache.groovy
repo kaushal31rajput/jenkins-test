@@ -7,6 +7,9 @@ def call(Map config) {
     String checksum = ChecksumUtils.getChecksum("${env.WORKSPACE}/package.json", "${env.WORKSPACE}/package-lock.json")
     String cacheKey = "npm-ci-cache-${checksum}"
     String bucketName = "gs://${env.JENKINS_GCS_BUCKET}"
+    sh "ls -larth"
+    sh "pwd"
+    echo "value for workspace is ${env.WORKSPACE}"
 
     if (isCacheValid(bucketName, checksum)) {
         log('DEBUG', "Restoring node_modules from cache")
