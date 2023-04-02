@@ -3,11 +3,17 @@
 import com.hcl.icontrol.jenkins.ChecksumUtils
 
 def call(Map config) {
+    sh "ls -larth"
+    sh "pwd"
+    echo "value for workspace is ${env.WORKSPACE}"
+    sh "cat package.json"
     String nodeModulesDir = "${env.WORKSPACE}/node_modules"
-    //String checksum = ChecksumUtils.getChecksum("${env.WORKSPACE}/package.json", "${env.WORKSPACE}/package-lock.json")
-    String checksum = config.checksum ?: ChecksumUtils.getChecksum("${env.WORKSPACE}/package.json", "${env.WORKSPACE}/package-lock.json")
+    String checksum = ChecksumUtils.getChecksum("package.json", "package-lock.json")
     String cacheKey = "npm-ci-cache-${checksum}"
     String bucketName = "gs://${env.JENKINS_GCS_BUCKET}"
+    sh "ls -larth"
+    sh "pwd"
+    echo "value for workspace is ${env.WORKSPACE}"
 
     if (isCacheValid(bucketName, checksum)) {
         log('DEBUG', "Restoring node_modules from cache")
@@ -22,7 +28,6 @@ def call(Map config) {
 }
 
 def isCacheValid(bucketName, checksum) {
-    container('gcloud') {
     try {
         sh "gsutil stat ${bucketName}/npm-ci-cache-checksum"
         sh "gsutil cp ${bucketName}/npm-ci-cache-checksum ."
@@ -40,24 +45,20 @@ def isCacheValid(bucketName, checksum) {
         log('DEBUG', "Error checking cache validity: ${e}")
         return false
     }
-  }
 }
 
 
 def restoreFromCache(cacheKey, bucketName, nodeModulesDir) {
-  container('gcloud') {
     try {
         cacheDownload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "npm-ci-cache"])
     } catch (Exception e) {
         log('DEBUG', "Cache not found in GCS bucket, installing dependencies")
         sh "npm ci"
     }
- }
 }
 
 
 def cache(key, bucketName, checksum) {
- container('gcloud') {
     try {
 	sh "pwd"
 	sh "ls -larth"
@@ -68,8 +69,7 @@ def cache(key, bucketName, checksum) {
         error "Failed to cache ${path}"
     }
   }
-}
 
-// def fileExists(path) {
-//     return new File(path).exists()
-// }
+def fileExists(path) {
+    return new File(path).exists()
+}
