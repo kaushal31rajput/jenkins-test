@@ -42,7 +42,7 @@ def isCacheValid(bucketName, checksum) {
 }
 
 
-def restoreFromCache(cacheKey, bucketName, nodeModulesDir) {
+def restoreFromCache(bucketName) {
     try {
         cacheDownload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "npm-ci-cache"])
     } catch (Exception e) {
