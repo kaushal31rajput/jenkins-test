@@ -22,6 +22,7 @@ def call(Map config) {
 }
 
 def isCacheValid(bucketName, checksum) {
+    container('gcloud') {
     try {
         sh "gsutil stat ${bucketName}/npm-ci-cache-checksum"
         sh "gsutil cp ${bucketName}/npm-ci-cache-checksum ."
@@ -39,6 +40,7 @@ def isCacheValid(bucketName, checksum) {
         log('DEBUG', "Error checking cache validity: ${e}")
         return false
     }
+    }
 }
 
 
@@ -53,6 +55,7 @@ def restoreFromCache(bucketName) {
 
 
 def cache(key, bucketName, checksum) {
+    container('gcloud') {
     try {
 	sh "pwd"
 	sh "ls -larth"
@@ -60,7 +63,9 @@ def cache(key, bucketName, checksum) {
     sh "gsutil cp npm-ci-cache-checksum ${bucketName}"
     cacheUpload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "npm-ci-cache"])
     } catch (Exception e) {
-        error "Failed to cache ${path}"
+        echo "Error caching  to ${bucketName}/${key}: ${e}"
+
+    }
     }
 }
 
