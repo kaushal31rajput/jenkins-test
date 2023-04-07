@@ -25,7 +25,7 @@ pipeline {
 	  npm ci 
 	  }
       }
-    
+   } 
     stage('Run test cases') {
       steps {
         sh '''# define where you want the test results
