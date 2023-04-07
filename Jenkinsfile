@@ -18,7 +18,9 @@ pipeline {
     stage('Install dependencies') {
       steps {
          println "Workspace directory: ${env.WORKSPACE}"
-         npmcache(bucketName: "gs://my-new-bucket-12344321-kaushal") 
+	 if (isCacheValid(bucketName: "gs://my-new-bucket-12344321-kaushal"))
+	     cacheDownload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "npm-ci-cache"])
+         //npmcache(bucketName: "gs://my-new-bucket-12344321-kaushal")
       }
     }
     stage('Run test cases') {
@@ -36,6 +38,8 @@ npx mocha --reporter mocha-jenkins-reporter'''
   post {
     always {
         junit 'test-results.xml'
+  	cacheUpload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "npm-ci-cache"])
+
     }
   }
 }
