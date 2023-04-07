@@ -18,7 +18,7 @@ pipeline {
     stage('Install dependencies') {
       steps {
          println "Workspace directory: ${env.WORKSPACE}"
-	 if [isCacheValid(bucketName: "gs://my-new-bucket-12344321-kaushal")]
+	 if isCacheValid(bucketName: "gs://my-new-bucket-12344321-kaushal")
 	     cacheDownload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "npm-ci-cache"])
          //npmcache(bucketName: "gs://my-new-bucket-12344321-kaushal")
 	 } else {
