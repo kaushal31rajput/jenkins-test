@@ -3,7 +3,6 @@
 import com.hcl.icontrol.jenkins.ChecksumUtils
 
 def call(Map config) {
-    container('gcloud') {
     try {
         String checksum = config.checksum ?: ChecksumUtils.getChecksum("${env.WORKSPACE}/package.json", "${env.WORKSPACE}/package-lock.json")
         sh "gsutil stat ${bucketName}/npm-ci-cache-checksum"
@@ -23,6 +22,5 @@ def call(Map config) {
     } catch (Exception e) {
         log('DEBUG', "Error checking cache validity: ${e}")
         return false
-    }
     }
 }
