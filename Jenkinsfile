@@ -19,7 +19,7 @@ pipeline {
 stage('Install dependencies') {
   steps {
     script {
-      if (isCacheValid(my-new-bucket-12344321-kaushal)) {
+      if (isCacheValid("gs://my-new-bucket-12344321-kaushal")) {
          cacheDownload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "npm-ci-cache"])
       } else {
         sh "npm ci" 
