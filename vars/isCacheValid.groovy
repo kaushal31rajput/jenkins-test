@@ -2,7 +2,7 @@
 
 import com.hcl.icontrol.jenkins.ChecksumUtils
 
-def isCacheValid(bucketName) {
+def call(Map config) {
     container('gcloud') {
     try {
         String checksum = config.checksum ?: ChecksumUtils.getChecksum("${env.WORKSPACE}/package.json", "${env.WORKSPACE}/package-lock.json")
