@@ -15,15 +15,19 @@ pipeline {
         sh 'cat file-2.txt'
       }
     }
-    stage('Install dependencies') {
-      steps {
-	 if (isCacheValid("gsmy-new-bucket-12344321-kaushal")) {
-	     cacheDownload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "npm-ci-cache"])
-	 } else {
-	  sh "npm ci" 
-	 }
+
+stage('Install dependencies') {
+  steps {
+    script {
+      if (isCacheValid("gsmy-new-bucket-12344321-kaushal")) {
+         cacheDownload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "npm-ci-cache"])
+      } else {
+        sh "npm ci" 
       }
     }
+  }
+}
+
     stage('Run test cases') {
       steps {
         sh '''# define where you want the test results
