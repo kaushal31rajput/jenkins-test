@@ -1,5 +1,6 @@
 @Library('first-shared-lib') _
 import org.jenkinsci.plugins.docker.workflow.*
+import com.hcl.icontrol.jenkins.ChecksumUtils 
 
 
 pipeline {
@@ -20,10 +21,10 @@ stage('Install dependencies') {
   steps {
     script {
           sh "ls -lart"
-          String checksum = getChecksum("${env.WORKSPACE}/package.json", "${env.WORKSPACE}/package-lock.json")
+          String checksum = ChecksumUtils.getChecksum("${env.WORKSPACE}/package.json", "${env.WORKSPACE}/package-lock.json")
 	  println "Content of checksum: ${checksum}"
 	  //sh "echo value for checksum: ${checksum}"
-	  if (cacheDownload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "npm-ci-cache-${checksum}"])) {
+	  if (cacheDownload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "icontrol-dev-npm-ci-cache-${checksum}"])) {
 	  sh "echo cache found"
 	  } else {
           sh "npm ci" 
