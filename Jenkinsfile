@@ -20,7 +20,7 @@ stage('Install dependencies') {
   steps {
     script {
           sh "ls -lart"
-          String checksum = ChecksumUtils.getChecksum("${env.WORKSPACE}/package.json", "${env.WORKSPACE}/package-lock.json")
+          String checksum = getChecksum("${env.WORKSPACE}/package.json", "${env.WORKSPACE}/package-lock.json")
 	  println "Content of checksum: ${checksum}"
 	  //sh "echo value for checksum: ${checksum}"
 	  if (cacheDownload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "npm-ci-cache-${checksum}"])) {
