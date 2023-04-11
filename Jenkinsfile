@@ -19,10 +19,11 @@ pipeline {
 stage('Install dependencies') {
   steps {
     script {
-      if (isCacheValid([bucketName: "gs://my-new-bucket-12344321-kaushal"])) {
-         cacheDownload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "npm-ci-cache"])
-      } else {
-        sh "npm ci" 
+          String checksum = ChecksumUtils.getChecksum("${env.WORKSPACE}/package.json", "${env.WORKSPACE}/package-lock.json")
+	  if (cacheDownload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "npm-ci-cache-${checksum}"])) {
+	  echo "cache found"
+	  } else {
+          sh "npm ci" 
       }
     }
   }
@@ -43,7 +44,7 @@ npx mocha --reporter mocha-jenkins-reporter'''
   post {
     always {
         junit 'test-results.xml'
-  	cacheUpload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "npm-ci-cache"])
+  	cacheUpload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "npm-ci-cache-${checksum}"])
 
     }
   }
