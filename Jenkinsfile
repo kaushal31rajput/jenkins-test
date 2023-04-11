@@ -25,7 +25,7 @@ stage('Install dependencies') {
 	  //println "Content of checksum: ${checksum}"
 	  //sh "echo value for checksum: ${checksum}"
 	  if (isCacheValid) {
-	      cacheDownload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "icontrol-dev-npm-ci-cache"])) 
+	      cacheDownload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "icontrol-dev-npm-ci-cache"]) 
 	  sh "echo cache found"
 	  } else {
           sh "npm ci" 
