@@ -21,10 +21,10 @@ stage('Install dependencies') {
   steps {
     script {
           sh "ls -lart"
-          String checksum = ChecksumUtils.getChecksum("${env.WORKSPACE}/package.json", "${env.WORKSPACE}/package-lock.json")
-	  println "Content of checksum: ${checksum}"
+          //String checksum = ChecksumUtils.getChecksum("${env.WORKSPACE}/package.json", "${env.WORKSPACE}/package-lock.json")
+	  //println "Content of checksum: ${checksum}"
 	  //sh "echo value for checksum: ${checksum}"
-	  if (cacheDownload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "icontrol-dev-npm-ci-cache-${checksum}"])) {
+	  if (cacheDownload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "icontrol-dev-npm-ci-cache"])) {
 	  sh "echo cache found"
 	  } else {
           sh "npm ci" 
@@ -48,7 +48,7 @@ npx mocha --reporter mocha-jenkins-reporter'''
   post {
     always {
         junit 'test-results.xml'
-  	cacheUpload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "npm-ci-cache-${checksum}"])
+  	cacheUpload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "icontrol-dev-npm-ci-cache"])
 
     }
   }
