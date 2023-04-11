@@ -7,7 +7,7 @@ def call(Map config) {
         String bucketName = "gs://${env.JENKINS_GCS_BUCKET}"
         String checksum = config.checksum ?: ChecksumUtils.getChecksum("${env.WORKSPACE}/package.json", "${env.WORKSPACE}/package-lock.json")
 
-        sh "gsutil stat ${bucketName}/npm-ci-cache-$(checksum)"
+        sh "gsutil stat ${bucketName}/npm-ci-cache-${checksum}"
         //sh "gsutil cp ${bucketName}/npm-ci-cache-checksum ."
         //cacheChecksum = readFile('npm-ci-cache-checksum').trim()
         echo "Both values cacheChecksum: ${cacheChecksum}, checksum: ${checksum}"
