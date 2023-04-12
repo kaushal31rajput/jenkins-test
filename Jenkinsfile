@@ -2,13 +2,15 @@
 import org.jenkinsci.plugins.docker.workflow.*
 import com.hcl.icontrol.jenkins.ChecksumUtils 
 
- environment {
-    PROJECT_NAME = "icontrol-web"
-    NPM_CI_CACHE = "icontrol-dev-npm-ci-cache"
-  }
+
 
 pipeline {
   agent any
+
+  environment {
+    PROJECT_NAME = "icontrol-web"
+    NPM_CI_CACHE = "icontrol-dev-npm-ci-cache"
+  }
   stages {
     stage('Check file 1') {
       steps {
