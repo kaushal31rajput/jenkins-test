@@ -24,7 +24,7 @@ stage('Install dependencies') {
           //String checksum = ChecksumUtils.getChecksum("${env.WORKSPACE}/package.json", "${env.WORKSPACE}/package-lock.json")
 	  //println "Content of checksum: ${checksum}"
 	  //sh "echo value for checksum: ${checksum}"
-	  if (isCacheValid) {
+	  if (isCacheValid()) {
 	      cacheDownload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "icontrol-dev-npm-ci-cache"]) 
 	  sh "echo cache found"
 	  } else {
