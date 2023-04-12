@@ -2,6 +2,10 @@
 import org.jenkinsci.plugins.docker.workflow.*
 import com.hcl.icontrol.jenkins.ChecksumUtils 
 
+ environment {
+    PROJECT_NAME = "icontrol-web"
+    icontrol-dev-npm-ci-cache = "icontrol-dev-npm-ci-cache"
+  }
 
 pipeline {
   agent any
