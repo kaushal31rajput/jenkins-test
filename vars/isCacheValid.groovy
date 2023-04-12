@@ -21,6 +21,7 @@ def call(Map config) {
         } 
         else {
             log('DEBUG', "Cache miss! Running npm-ci.")
+            sh "echo ${checksum} > npm-ci-cache-${checksum}"
 	        sh "gsutil cp npm-ci-cache-${checksum} ${bucketName}"
             return false
          } 
