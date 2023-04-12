@@ -24,7 +24,7 @@ def call(Map config) {
         // } 
     } catch (Exception e) {
         log('DEBUG', "Error checking cache validity: ${e}")
-	sh "gsutil cp npm-ci-cache-${checksum} ${bucketName}"
+	    sh "gsutil cp npm-ci-cache-${checksum} ${bucketName}"
         return false
     }
 }
