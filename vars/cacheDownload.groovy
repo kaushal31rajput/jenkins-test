@@ -7,6 +7,7 @@ import com.hcl.icontrol.jenkins.TextUtils
 @SuppressWarnings('unused')
 def call(Map config = [:]) {
     String cacheKey = config.CACHE_KEY ?: "JOB_NAME"
+    log('DEBUG', ${env[cacheKey]})
     String cacheFile = TextUtils.sanitizeCacheKey("${env[cacheKey]}") + ".tar.gz"
     String bucketName = "gs://${env.JENKINS_GCS_BUCKET}"
     String workspaceCacheDir = config.WORKSPACE_CACHE_DIR
