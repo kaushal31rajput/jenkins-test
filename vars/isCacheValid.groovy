@@ -12,7 +12,7 @@ def call(Map config) {
         //sh "gsutil cp ${bucketName}/npm-ci-cache-checksum ."
         //cacheChecksum = readFile('npm-ci-cache-checksum').trim()
         if (fileExist == 0) {
-        echo "Both values cacheChecksum: ${cacheChecksum}, checksum: ${checksum}"
+        //echo "Both values cacheChecksum: ${cacheChecksum}, checksum: ${checksum}"
         //sh "echo ${checksum} > npm-ci-cache-checksum"
     	//sh "gsutil cp npm-ci-cache-${checksum} ${bucketName}"
         //if (cacheChecksum == checksum) {
