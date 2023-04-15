@@ -4,8 +4,6 @@ import com.hcl.icontrol.jenkins.ChecksumUtils
 
 def call(Map config) {
     try {
-         sh "set"
-
         String bucketName = "gs://${env.JENKINS_GCS_BUCKET}"
         String checksum = ChecksumUtils.getChecksum("${env.WORKSPACE}/package.json", "${env.WORKSPACE}/package-lock.json")
 
