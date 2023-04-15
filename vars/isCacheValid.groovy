@@ -25,12 +25,12 @@ def call(Map config) {
         else {
             log('DEBUG', "Cache miss! Running npm-ci.")
             sh "echo ${checksum} > npm-ci-cache-${checksum}"
-	        sh "gsutil cp npm-ci-cache-${checksum} ${bucketName}"
+	        sh "gsutil cp ${env.JOB_NAME}-npm-ci-cache-${checksum} ${bucketName}"
             return false
          } 
     } catch (Exception e) {
         log('DEBUG', "Error checking cache validity: ${e}")
-	    sh "gsutil cp npm-ci-cache-${checksum} ${bucketName}"
+	    sh "gsutil cp ${env.JOB_NAME}-npm-ci-cache-${checksum} ${bucketName}"
         return false
     }
 }
