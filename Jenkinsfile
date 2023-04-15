@@ -9,7 +9,7 @@ pipeline {
 
   environment {
     PROJECT_NAME = "icontrol-web"
-    NPM_CI_CACHE = "icontrol-dev-npm-ci-cache"
+    NPM_CI_CACHE = "${env.JOB_NAME}-npm-ci-cache"
   }
   stages {
     stage('Check file 1') {
@@ -55,7 +55,7 @@ npx mocha --reporter mocha-jenkins-reporter'''
   post {
     always {
         junit 'test-results.xml'
-  	cacheUpload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "icontrol-dev-npm-ci-cache"])
+  	cacheUpload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "NPM_CI_CACHE"])
 
     }
   }
