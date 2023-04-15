@@ -26,6 +26,6 @@ pipeline {
     }
 
     options {
-        cache(name: 'npm-cache', paths: ['.npm/'])
+        cache(key: 'npm-cache', paths: ['.npm/'])
     }
 }
