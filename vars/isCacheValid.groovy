@@ -4,7 +4,7 @@ import com.hcl.icontrol.jenkins.ChecksumUtils
 
 def call(Map config) {
     try {
-        echo "BUILD_NUMBER ::" env.BUILD_NUMBER
+        echo "BUILD_NUMBER ::" "JOB_NAME"
         echo "BUILD_ID ::" $BUILD_ID
         echo "BUILD_DISPLAY_NAME ::" $BUILD_DISPLAY_NAME
         echo "JOB_NAME ::" $JOB_NAME
