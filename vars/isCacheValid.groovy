@@ -9,7 +9,7 @@ def call(Map config) {
         String bucketName = "gs://${env.JENKINS_GCS_BUCKET}"
         String checksum = ChecksumUtils.getChecksum("${env.WORKSPACE}/package.json", "${env.WORKSPACE}/package-lock.json")
 
-        def fileExist = sh(script: "gsutil stat ${bucketName}/npm-ci-cache-${checksum}", returnStatus: true) as Integer
+        def fileExist = sh(script: "gsutil stat ${bucketName}/${env.JOB_NAME}-npm-ci-cache-${checksum}", returnStatus: true) as Integer
         //sh "gsutil stat ${bucketName}/npm-ci-cache-${checksum}"
         //sh "gsutil cp ${bucketName}/npm-ci-cache-checksum ."
         //cacheChecksum = readFile('npm-ci-cache-checksum').trim()
