@@ -4,22 +4,7 @@ import com.hcl.icontrol.jenkins.ChecksumUtils
 
 def call(Map config) {
     try {
-        String cacheKey = "JOB_NAME"
-         log('DEBUG', "value for job_name  ${cacheKey}")
-        echo "BUILD_NUMBER ::" "JOB_NAME"
-        echo "BUILD_ID ::" $BUILD_ID
-        echo "BUILD_DISPLAY_NAME ::" $BUILD_DISPLAY_NAME
-        echo "JOB_NAME ::" $JOB_NAME
-        echo "JOB_BASE_NAME ::" $JOB_BASE_NAME
-        echo "BUILD_TAG ::" $BUILD_TAG
-        echo "EXECUTOR_NUMBER ::" $EXECUTOR_NUMBER
-        echo "NODE_NAME ::" $NODE_NAME
-        echo "NODE_LABELS ::" $NODE_LABELS
-        echo "WORKSPACE ::" $WORKSPACE
-        echo "JENKINS_HOME ::" $JENKINS_HOME
-        echo "JENKINS_URL ::" $JENKINS_URL
-        echo "BUILD_URL ::" $BUILD_URL
-        echo "JOB_URL ::" $JOB_URL
+         sh "set"
 
         String bucketName = "gs://${env.JENKINS_GCS_BUCKET}"
         String checksum = ChecksumUtils.getChecksum("${env.WORKSPACE}/package.json", "${env.WORKSPACE}/package-lock.json")
