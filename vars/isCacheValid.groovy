@@ -4,6 +4,8 @@ import com.hcl.icontrol.jenkins.ChecksumUtils
 
 def call(Map config) {
     try {
+        String cacheKey = "JOB_NAME"
+         log('DEBUG', "value for job_name  ${cacheKey}")
         echo "BUILD_NUMBER ::" "JOB_NAME"
         echo "BUILD_ID ::" $BUILD_ID
         echo "BUILD_DISPLAY_NAME ::" $BUILD_DISPLAY_NAME
