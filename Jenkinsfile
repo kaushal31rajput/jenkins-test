@@ -9,7 +9,7 @@ pipeline {
 
   environment {
     PROJECT_NAME = "icontrol-web"
-    NPM_CI_CACHE = "${env.JOB_NAME}-npm-ci-cache"
+    NPM_CI_CACHE = "${env.JOB_NAME}-NPM-CACHE"
     file1 = "package.json"
     file2 = "package-lock.json"
   }
