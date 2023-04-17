@@ -25,12 +25,19 @@ pipeline {
 
 stage('Install dependencies') {
   steps {
-     script {
-        cache(maxCacheSize: 250, caches: [
-          arbitraryFileCache(path: 'node_modules', cacheValidityDecidingFile: 'package-lock.json')
-])
+    script {
+          sh "ls -lart"
+          //String checksum = ChecksumUtils.getChecksum("${env.WORKSPACE}/package.json", "${env.WORKSPACE}/package-lock.json")
+	  //println "Content of checksum: ${checksum}"
+	  //sh "echo value for checksum: ${checksum}"
+	  if (isCacheValid()) {
+	      cacheDownload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "NPM_CI_CACHE"]) 
+	  sh "echo cache found"
+	  } else {
+          sh "npm ci" 
+      }
+    }
   }
-}
 }
 
     stage('Run test cases') {
@@ -48,6 +55,7 @@ npx mocha --reporter mocha-jenkins-reporter'''
   post {
     always {
         junit 'test-results.xml'
+  	cacheUpload([WORKSPACE_CACHE_DIR: "node_modules", CACHE_KEY: "NPM_CI_CACHE"])
 
     }
   }
