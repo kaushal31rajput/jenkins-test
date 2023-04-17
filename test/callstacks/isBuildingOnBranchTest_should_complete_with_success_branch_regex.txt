@@ -1,0 +1,3 @@
+   isBuildingOnBranch.call({BRANCH_REGEX=develop|master})
+      isBuildingOnBranch.isBuildingOnTag()
+      isBuildingOnBranch.log(DEBUG, Check is building on branch, regex=develop|master, currentBranch=develop, currentBranchMatchesRegex=true)

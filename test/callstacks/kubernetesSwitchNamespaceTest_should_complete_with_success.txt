@@ -1,0 +1,3 @@
+   kubernetesSwitchNamespace.call(default)
+      kubernetesSwitchNamespace.container(gcloud, groovy.lang.Closure)
+         kubernetesSwitchNamespace.sh(kubectl config set-context --current --namespace default)

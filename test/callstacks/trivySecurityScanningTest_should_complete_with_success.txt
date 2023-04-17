@@ -1,0 +1,6 @@
+   trivySecurityScanning.call({FULL_IMAGE_REF_NAME=europe-west2-docker.pkg.dev/dryice-icontrol/k8s/icontrol:1.3.0})
+      trivySecurityScanning.container(trivy, groovy.lang.Closure)
+         trivySecurityScanning.log(INFO, Scanning HIGH,CRITICAL vulnerabilities with fix available (europe-west2-docker.pkg.dev/dryice-icontrol/k8s/icontrol:1.3.0))
+         trivySecurityScanning.sh(
+                    trivy image --exit-code 1 --vuln-type os,library --severity HIGH,CRITICAL --security-checks vuln --ignore-unfixed europe-west2-docker.pkg.dev/dryice-icontrol/k8s/icontrol:1.3.0
+                )

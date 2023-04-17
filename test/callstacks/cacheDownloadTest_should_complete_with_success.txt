@@ -1,0 +1,11 @@
+   cacheDownload.call({WORKSPACE_CACHE_DIR=.m2/repository})
+      cacheDownload.log(DEBUG, Download cache cacheKey=JOB_NAME, cache file=test-job.tar.gz, directory=.m2/repository,)
+      cacheDownload.container(gcloud, groovy.lang.Closure)
+         cacheDownload.sh({script=gcloud storage ls -L gs://mgmt-jenkins-artifacts/test-job.tar.gz, returnStatus=true})
+         cacheDownload.dir(null, groovy.lang.Closure)
+            cacheDownload.sh({script=
+                    gcloud storage cp gs://mgmt-jenkins-artifacts/test-job.tar.gz test-job.tar.gz
+                    mkdir -p .m2/repository
+                    tar -xf test-job.tar.gz
+                    rm test-job.tar.gz
+                })

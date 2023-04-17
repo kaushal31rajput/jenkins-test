@@ -1,0 +1,5 @@
+   yq.updateFromEnvVariable({FILE=manifest.yaml, PATH=.spec.appVersion, ENV_VAR_NAME=APP_VERSION})
+      yq.log(DEBUG, Updating file=manifest.yaml to environment variable=APP_VERSION value=1.2.3)
+      yq.sh(
+            yq -i '.spec.appVersion = "1.2.3" | .spec.appVersion style="double"' "manifest.yaml"
+        )

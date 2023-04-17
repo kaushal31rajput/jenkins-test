@@ -1,0 +1,3 @@
+   sendNotification.teams()
+      sendNotification.log(DEBUG, Should send teams notification buildStatusMatch=true, branchMatch=true, selectedChannel=JENKINS_GCP_ALERTS)
+      sendNotification.office365ConnectorSend({webhookUrl=https://office.teams.com/gcp-alerts})

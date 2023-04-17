@@ -1,0 +1,5 @@
+   isCacheValid.call({checksum=12345})
+      isCacheValid.container(gcloud, groovy.lang.Closure)
+         isCacheValid.sh({script=gsutil stat gs://test-bucket-npmcache/icontrol-npm-cache-12345, returnStatus=true})
+         isCacheValid.sh({script=gsutil stat gs://test-bucket-npmcache/icontrol-npm-cache.tar.gz, returnStatus=true})
+         isCacheValid.log(DEBUG, Cache hit! Skipping npm-ci.)

@@ -1,0 +1,39 @@
+   mendSecurityScanning.call({SCAN_TYPE=IMAGE, FULL_IMAGE_REF_NAME=hcldryiceicontrol/icontrol-openldap:1.1.0})
+      mendSecurityScanning.sh(
+      echo "wss.url=https://saas.whitesourcesoftware.com/agent" > ./wss-unified-agent.config
+      echo "productName=DRYiCE iControl" >> ./wss-unified-agent.config
+      echo "projectName=icontrol" >> ./wss-unified-agent.config
+      echo "checkPolicies=true" >> ./wss-unified-agent.config
+      echo "forceCheckAllDependencies=true" >> ./wss-unified-agent.config
+      echo "log.files.level=WARN" >> ./wss-unified-agent.config
+    )
+      mendSecurityScanning.container(mend, groovy.lang.Closure)
+         mendSecurityScanning.sh(
+                  echo "docker.includes=.*hcldryiceicontrol/icontrol-openldap.*" >> ./wss-unified-agent.config
+                )
+         mendSecurityScanning.log(info, Pulling image=hcldryiceicontrol/icontrol-openldap:1.1.0 for scanning...)
+         mendSecurityScanning.sh(docker pull hcldryiceicontrol/icontrol-openldap:1.1.0)
+         mendSecurityScanning.log(debug, Image pulled. Available images)
+         mendSecurityScanning.sh(docker image ls)
+         mendSecurityScanning.sh(
+              echo "docker.scanImages=true" >> ./wss-unified-agent.config
+              echo "docker.projectNameFormat=repositoryName" >> ./wss-unified-agent.config
+              echo "fileSystemScan=false" >> ./wss-unified-agent.config
+              echo "resolveAllDependencies=false" >> ./wss-unified-agent.config
+              echo "includes=*.nothing" >> ./wss-unified-agent.config
+              echo "excludes=**.*" >> ./wss-unified-agent.config
+            )
+         mendSecurityScanning.fileExists(wss-unified-agent.jar)
+         mendSecurityScanning.withEnv([MEND_CONFIG_FILE_PATH=./wss-unified-agent.config, MEND_SCAN_DIRECTORY=., MEND_LOG_LEVEL=WARN, AGENT_PATH=wss-unified-agent.jar], groovy.lang.Closure)
+            mendSecurityScanning.string({credentialsId=mend-api-key, variable=MEND_API_KEY})
+            mendSecurityScanning.withCredentials([MEND_API_KEY], groovy.lang.Closure)
+               mendSecurityScanning.sh(java -jar $AGENT_PATH -apiKey $MEND_API_KEY -c $MEND_CONFIG_FILE_PATH -d $MEND_SCAN_DIRECTORY -logLevel $MEND_LOG_LEVEL)
+            mendSecurityScanning.string({credentialsId=mend-api-key, variable=MEND_API_KEY})
+            mendSecurityScanning.withCredentials([MEND_API_KEY], groovy.lang.Closure)
+               mendSecurityScanning.sh(java -jar $AGENT_PATH -apiKey $MEND_API_KEY -c $MEND_CONFIG_FILE_PATH -d $MEND_SCAN_DIRECTORY -logLevel $MEND_LOG_LEVEL)
+            mendSecurityScanning.string({credentialsId=mend-api-key, variable=MEND_API_KEY})
+            mendSecurityScanning.withCredentials([MEND_API_KEY], groovy.lang.Closure)
+               mendSecurityScanning.sh(java -jar $AGENT_PATH -apiKey $MEND_API_KEY -c $MEND_CONFIG_FILE_PATH -d $MEND_SCAN_DIRECTORY -logLevel $MEND_LOG_LEVEL)
+            mendSecurityScanning.string({credentialsId=mend-api-key, variable=MEND_API_KEY})
+            mendSecurityScanning.withCredentials([MEND_API_KEY], groovy.lang.Closure)
+               mendSecurityScanning.sh(java -jar $AGENT_PATH -apiKey $MEND_API_KEY -c $MEND_CONFIG_FILE_PATH -d $MEND_SCAN_DIRECTORY -logLevel $MEND_LOG_LEVEL)

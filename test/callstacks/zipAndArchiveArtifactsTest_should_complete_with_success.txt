@@ -1,0 +1,7 @@
+   zipAndArchiveArtifacts.call({ARTIFACT_FILE_NAME=jenkins-unit-test, DIRECTORIES=[volumes/splunk, volumes/logs]})
+      zipAndArchiveArtifacts.fileExists(volumes/splunk)
+      zipAndArchiveArtifacts.fileExists(volumes/logs)
+      zipAndArchiveArtifacts.log(DEBUG, Existing directories to package=[volumes/splunk, volumes/logs])
+      zipAndArchiveArtifacts.sh(tar -czf jenkins-unit-test.tar.gz volumes/splunk volumes/logs)
+      zipAndArchiveArtifacts.archiveArtifacts({artifacts=jenkins-unit-test.tar.gz, allowEmptyArchive=true})
+      zipAndArchiveArtifacts.log(DEBUG, Archived artifacts successfully, zip&&archive duration=PT0.008871S)

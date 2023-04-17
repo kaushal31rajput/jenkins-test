@@ -1,0 +1,15 @@
+   buildDockerImage.call({})
+      buildDockerImage.gitCommitShort()
+      buildDockerImage.isBuildingOnTag()
+      buildDockerImage.log(DEBUG, Image from tag=europe-west2-docker.pkg.dev/dryice-icontrol/k8s/icontrol:1.3.0)
+      buildDockerImage.log(INFO, Building image for tag=europe-west2-docker.pkg.dev/dryice-icontrol/k8s/icontrol:1.3.0 with context path=. and dockerfile path=Dockerfile)
+      buildDockerImage.container(docker, groovy.lang.Closure)
+         buildDockerImage.sh(
+            docker build . --file "Dockerfile"   --tag europe-west2-docker.pkg.dev/dryice-icontrol/k8s/icontrol:1.3.0 
+        )
+         buildDockerImage.isBuildingOnTag()
+         buildDockerImage.log(INFO, Pushing image=europe-west2-docker.pkg.dev/dryice-icontrol/k8s/icontrol:1.3.0)
+         buildDockerImage.sh(
+                docker push "europe-west2-docker.pkg.dev/dryice-icontrol/k8s/icontrol:1.3.0"
+            )
+      buildDockerImage.log(INFO, Images successfully built and pushed)

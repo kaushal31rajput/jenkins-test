@@ -1,0 +1,2 @@
+   log.call(INFO, Example log)
+      log.echo([0;42m [INFO] Example log [0m)

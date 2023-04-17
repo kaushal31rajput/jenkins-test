@@ -1,0 +1,2 @@
+   isBuildingOnBranch.call({})
+      isBuildingOnBranch.isBuildingOnTag()

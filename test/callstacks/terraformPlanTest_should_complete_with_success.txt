@@ -1,0 +1,4 @@
+   terraformPlan.call(terraform plan, {type=GCP, env=test})
+      terraformPlan.log(INFO, Terraform GCP plan test)
+      terraformPlan.sh({script=terraform plan, returnStatus=true})
+      terraformPlan.log(INFO, Terraform does not have any changes for GCP env test)

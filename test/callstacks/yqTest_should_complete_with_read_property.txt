@@ -1,0 +1,4 @@
+   yq.readProperty({FILE=manifest.yaml, PATH=.spec.appVersion, DEFAULT=abcd})
+      yq.sh({script=
+        yq '.spec.appVersion // abcd' "manifest.yaml"
+    , returnStdout=true})

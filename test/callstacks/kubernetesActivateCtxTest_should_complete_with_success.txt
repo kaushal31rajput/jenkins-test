@@ -1,0 +1,12 @@
+   kubernetesActivateCtx.call({})
+      kubernetesActivateCtx.log(INFO, Cluster=dev-cluster authentication [project=icontrol-development])
+      kubernetesActivateCtx.container(gcloud, groovy.lang.Closure)
+         kubernetesActivateCtx.sh(gcloud container clusters get-credentials dev-cluster --region europe-west2 --project icontrol-development)
+         kubernetesActivateCtx.sh({script=kubectl config current-context, returnStdout=true})
+         kubernetesActivateCtx.log(TRACE, ClusterIP=10.110.0.7 )
+         kubernetesActivateCtx.sh(
+            kubectl config set-cluster bbb
+ccc --server="https://10.110.0.7 " --tls-server-name=kubernetes.default.svc.cluster.local
+            gcloud auth application-default print-access-token | helm registry login -u oauth2accesstoken --password-stdin europe-west2-docker.pkg.dev
+        )
+      kubernetesActivateCtx.kubernetesSwitchNamespace(default)

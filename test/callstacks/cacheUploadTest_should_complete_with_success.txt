@@ -1,0 +1,9 @@
+   cacheUpload.call({WORKSPACE_CACHE_DIR=.m2/repository})
+      cacheUpload.log(DEBUG, Cache upload cacheKey=JOB_NAME, cacheFile=test-job.tar.gz, workspaceCacheDir=.m2/repository)
+      cacheUpload.container(gcloud, groovy.lang.Closure)
+         cacheUpload.dir(null, groovy.lang.Closure)
+            cacheUpload.sh({script=
+                    tar -czf test-job.tar.gz .m2/repository
+                    gcloud storage cp test-job.tar.gz gs://mgmt-jenkins-artifacts
+                })
+            cacheUpload.log(DEBUG, Cache upload finished successfully)

@@ -1,0 +1,13 @@
+   sendNotification.mail()
+      sendNotification.log(DEBUG, Mail config=[:])
+      sendNotification.emailextrecipients([{$class=CulpritsRecipientProvider}])
+      sendNotification.log(DEBUG, CulpritsRecipientProvider: )
+      sendNotification.emailextrecipients([{$class=DevelopersRecipientProvider}])
+      sendNotification.log(DEBUG, DevelopersRecipientProvider: )
+      sendNotification.emailextrecipients([{$class=CulpritsRecipientProvider}, {$class=DevelopersRecipientProvider}])
+      sendNotification.sh(git config --global --add safe.directory '*')
+      sendNotification.sh({script=git log -1 --format='%ae' HEAD, returnStdout=true})
+      sendNotification.log(DEBUG, Should send email notification buildStatusMatch=true, branchMatch=true, toRecipients=bbb
+ccc, emailRecipients=, includeIndividual=true includeGroup=false)
+      sendNotification.emailext({body=${SCRIPT, template="email-custom.template"}, recipientProviders=[{$class=CulpritsRecipientProvider}, {$class=DevelopersRecipientProvider}], mimeType=text/html, subject=${DEFAULT_SUBJECT}, to=bbb
+ccc})

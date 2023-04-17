@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: com.hcl.icontrol.jenkins.TemplateRendererTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.003 s <<< FAILURE! - in com.hcl.icontrol.jenkins.TemplateRendererTest
+should template python pod template  Time elapsed: 0.002 s  <<< ERROR!
+java.lang.IllegalArgumentException: resource pod-templates/python.yaml not found.
+	at com.hcl.icontrol.jenkins.TemplateRendererTest.should template python pod template(TemplateRendererTest.groovy:13)
+

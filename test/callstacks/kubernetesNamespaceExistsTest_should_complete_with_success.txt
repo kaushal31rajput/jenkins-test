@@ -1,0 +1,2 @@
+   kubernetesNamespaceExists.call({NAME=default})
+      kubernetesNamespaceExists.sh(kubectl get ns default)
