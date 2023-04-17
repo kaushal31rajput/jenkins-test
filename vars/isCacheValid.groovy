@@ -8,8 +8,8 @@ def call(Map config) {
         String checksum = ChecksumUtils.getChecksum("${env.WORKSPACE}/${config.file1}", "${env.WORKSPACE}/${config.file2}")
         log('DEBUG', "checksum: ${checksum}")
 
-        def checksumfileExist = sh(script: "gsutil stat ${bucketName}/${env.JOB_NAME}-config.NAME-${checksum}", returnStatus: true) as Integer   
-        def cachefileExist = sh(script: "gsutil stat ${bucketName}/${env.JOB_NAME}-config.NAME.tar.gz", returnStatus: true) as Integer
+        def checksumfileExist = sh(script: "gsutil stat ${bucketName}/${env.JOB_NAME}-${config.NAME}-${checksum}", returnStatus: true) as Integer   
+        def cachefileExist = sh(script: "gsutil stat ${bucketName}/${env.JOB_NAME}-${config.NAME}.tar.gz", returnStatus: true) as Integer
         if (checksumfileExist == 0 && cachefileExist == 0) {
             log('DEBUG', "Cache hit! Skipping npm-ci.")
             return true
