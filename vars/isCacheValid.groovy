@@ -5,7 +5,7 @@ import com.hcl.icontrol.jenkins.ChecksumUtils
 def call(Map config) {
     try {
         String bucketName = "gs://${env.JENKINS_GCS_BUCKET}"
-        String checksum = ChecksumUtils.getChecksum("${env.WORKSPACE}/package.json", "${env.WORKSPACE}/package-lock.json")
+        String checksum = config.checksum ?: ChecksumUtils.getChecksum("${env.WORKSPACE}/package.json", "${env.WORKSPACE}/package-lock.json")
 
         def checksumfileExist = sh(script: "gsutil stat ${bucketName}/${env.JOB_NAME}-npm-ci-cache-${checksum}", returnStatus: true) as Integer   
         def cachefileExist = sh(script: "gsutil stat ${bucketName}/${env.JOB_NAME}-npm-ci-cache.tar.gz", returnStatus: true) as Integer
