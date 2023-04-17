@@ -6,6 +6,7 @@ def call(Map config) {
     try {
         String bucketName = "gs://${env.JENKINS_GCS_BUCKET}"
         String checksum = ChecksumUtils.getChecksum("${env.WORKSPACE}/${config.file1}", "${env.WORKSPACE}/${config.file2}")
+        log('DEBUG', "checksum: ${checksum}")
 
         def checksumfileExist = sh(script: "gsutil stat ${bucketName}/${env.JOB_NAME}-config.NAME-${checksum}", returnStatus: true) as Integer   
         def cachefileExist = sh(script: "gsutil stat ${bucketName}/${env.JOB_NAME}-config.NAME.tar.gz", returnStatus: true) as Integer
