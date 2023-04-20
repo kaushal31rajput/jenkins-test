@@ -1,4 +1,4 @@
-#### thisManaging Continuous Integration Pipelines with Jenkins
+###12# thisManaging Continuous Integration Pipelines with Jenkins
 
 123554 In this tutorial, you will learn to set up a Jenkins instance. You will also see how to make use of the latest [Blue Ocean](https://wiki.jenkins.io/display/JENKINS/Blue+Ocean+Plugin) plugin interface and integrate with GitHub to run automated tests.
 
